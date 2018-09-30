@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
 # Load the data set
-from Hard_Coded_Classifier import HardCodedClassifier
+from kNN import kNNClassifier
 
 iris = datasets.load_iris()
 
@@ -47,14 +47,16 @@ print("Accuracy Score:")
 percent = accuracy_score(targets_test, targets_predicted)
 print("{:.0%}".format(percent))
 
-print("\n\nPreparing hard-coded classifier...")
+print("\n\nPreparing k-Nearest Neighbors classifier...")
+k = int(input("Enter the number of neighbors to check (k):"))
 
-classifier = HardCodedClassifier()
+classifier = kNNClassifier(k)
 print("Training classifier...")
 model = classifier.fit(data_train, targets_train)
 print("\nRunning test --- sending 30% data for testing and predicting targets...")
-targets_predicted = model.predict(data_test)
+targets_predicted = model.predict(data_train, targets_train, data_test, k)
 print("\nComparing targets tested to the targets trained...")
 print("Accuracy Score:")
-percent = accuracy_score(targets_test, targets_predicted)
-print("{:.0%}".format(percent))
+# percent = accuracy_score(targets_test, targets_predicted)
+# print("{:.0%}".format(percent))
+print(targets_predicted)
